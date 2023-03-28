@@ -1,0 +1,97 @@
+General commands:
+
+# cat /etc/os-release --> new servers
+# cat /etc/*release --> OS version of any linux
+# find / -type d -name <Name> --> Find a directory
+# cat /etc/ssh/sshd_config
+# service sshd restart
+# ip r
+# ifconfig -a |grep inet
+# crontab -l --> to check chron Jobs
+# df -Pht nfs --> to check nfs volume details
+# df -a  --> To check all filesystems (unmounted also)
+# du -sh <file/dir name>  --> Disk usage
+# du -shx | sort -h  --> To check the largest files
+# lsblk - list all block devices
+# vgs - show all volume groups
+# reboot:exit  -> Reboot command
+# time <command> --> to check how much time the command takes to exec
+# df -h; df -h |wc -l; netstat -nr; netstat -nr |wc -l  => pre checks before patching
+# lsblk |grep sd
+# chown -R wmapfi:wmapfi /apps/software/Java11/jdk-11.0.16.1
+# chmod 755 $(find * -type d)
+# ps -ef |grep -v root
+# pam_tally2 -u userid = > login failure check
+# wmapfi ALL=(ALL) NOPASSWD: ALL
+
+
+########UBS SFG connectivity - copy our QA privite keys to UBS############
+# sftp -oport=22 -oIdentityFile=/home/wmapfi/.ssh/ubs-key-qa UBSBESL00IBQ@filegateway-qa.broadridge.net
+
+
+Upload & download from Nexus:
+# curl -v -u nagamm --upload <filename> https://artifacts.devops.bfsaws.net/artifactory/RAW-HOSTED-TEST-DEV/gto-wmapfi/   ==> Upload
+# curl -v -u nagamm https://artifacts.devops.bfsaws.net:443/artifactory/RAW-HOSTED-TEST-DEV/gto-wmapfi/settings.xml -o <settings.xml>  ==> download
+
+PERformance commands:
+# watch ps -eaf | grep 'pmdtm'
+# ps aux | egrep "wmapos|wmapfi|infaadm" | awk '{ a[$1]++ } END { for(i in a) print i,a[i] }' | sort -nk2,2  --> total number of process running each user
+# ps aux | awk '/wmapfi/ {print $1"\t"$2"\t"$3"\t"$4"\t"$9"\t"$11}'
+# netstat -nr -
+# nfsiostat --> nfs volume status
+# sar 1 10
+# sysctl -a
+# dmidecode -t processor
+# dmesg -T |tail --> 
+# chkconfig --list |grep zcen   --> To check startup scripts
+# pcs status  --> Redhat PCS cluster status
+# hastatus -sum  --> Check VCS cluster status
+# ssh-keygen -t rsa
+# tar -cvf test.tar -C target/ <file name or (.)>  --> To compress only files in spec folder instead of entire folder structure
+# tar –xvzf documents.tar.gz –C /home/user/destination --> To extract exact files inside path
+
+Network:
+# ping -c5 <ip/fqdn>
+# netstat -tulnp |grep LISTEN --> To check 
+
+Install postgres
+# yum list --> To view all packages available in our repository
+# yum repolist --> To check repository list
+# rpm -qa |grep -i postgresql  --> to check availability of package
+# yum install postgresql
+# psql --version
+
+Install NCAT
+# yum install nc
+# nc -h
+
+Install Maven
+# yum install maven
+
+Check Oracle Version:
+# su - oracle
+# sqlplus -V
+
+Python install
+# rpm -ql python3-3.6.8-18.el7.x86_64 |more
+# rpm -qa |grep -i python36
+# pip3 -V
+# pip3 search pyyaml
+# pip3 list
+# pip3 show pyyaml
+# pip3 install PyYAML
+#alias python="/usr/local/bin/python3.9"
+
+https://www.kernel.org/doc/Documentation/sysctl/vm.txt
+
+
+
+
+update-alternatives --install "/usr/bin/java" "java" "/apps/software/Java11/jdk-11.0.16.1/bin/java"
+
+
+informatica doesnt need VIP to get working as its connecting 
+
+nick/kendryl will help setup vip UAT env
+
+scp jdk-11.0.16.1_linux-x64_bin.tar.gz monuser@bgcclvfietlu1:/tmp
