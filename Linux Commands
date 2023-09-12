@@ -2,16 +2,16 @@ General commands:
 
 # cat /etc/os-release --> new servers
 # cat /etc/*release --> OS version of any linux
+# grep MemTotal /proc/meminfo  --> Total memory (RAM)
 # find / -type d -name <Name> --> Find a directory
 # cat /etc/ssh/sshd_config
-# service sshd restart
-# ip r
-# ifconfig -a |grep inet
 # crontab -l --> to check chron Jobs
 # df -Pht nfs --> to check nfs volume details
 # df -a  --> To check all filesystems (unmounted also)
 # du -sh <file/dir name>  --> Disk usage
 # du -shx | sort -h  --> To check the largest files
+# du -a /media/jack | sort -n -r | head -n 10 --> sort by largest top 10
+# lsof|grep wmapfi --> All open files by user wmapfi
 # lsblk - list all block devices
 # vgs - show all volume groups
 # reboot:exit  -> Reboot command
@@ -21,13 +21,34 @@ General commands:
 # chown -R wmapfi:wmapfi /apps/software/Java11/jdk-11.0.16.1
 # chmod 755 $(find * -type d)
 # ps -ef |grep -v root
+# ps -eaf | grep pmdtm | wc -l 
 # pam_tally2 -u userid = > login failure check
 # wmapfi ALL=(ALL) NOPASSWD: ALL
+# setfacl -R -m u:wmapfi:rx /path/to/Dir/Fike
+# gpasswd -a wmapfi <groupA>  --> To add user wmapfi to group groupA
+# yum whatprovides <command> --> 
+# ls -t | awk 'NR>5 {print}' | xargs rm -f --> Kill old process
+# kill $(ps aux | grep '/apps/zcentric/TWS95/TWS/bin/taskLauncher.sh' | awk '{print $2}')
 
 
 ########UBS SFG connectivity - copy our QA privite keys to UBS############
 # sftp -oport=22 -oIdentityFile=/home/wmapfi/.ssh/ubs-key-qa UBSBESL00IBQ@filegateway-qa.broadridge.net
+# sftp -oIdentityFile=/home/wmapfi/.ssh/ubs-key-uat UBSBESL00IBU@10.157.121.228
 
+
+## Networking Commands ##
+# ifconfig -a |grep inet
+# service sshd restart
+# ip r
+# ifconfig -a |grep inet
+# traceroute -T <IP Addr>  -> To get traaceroute result if simple traceroute doesnt work.
+# traceroute -s <Source IP> <Dest IP>
+# ssh-keygen -t rsa
+# ping -c5 <ip/fqdn>
+# netstat -tulnp |grep LISTEN --> To check 
+# route add -net 10.98.74.241 netmask 255.255.255.255 gw 10.24.48.250
+# mount -t nfs -o rw,vers=3,retrans=2,rsize=1048576,wsize=1048576,local_lock=none,proto=tcp,mountproto=tcp,timeo=600 clnprdpcsvm11.adp-icd.net:/WMAPFIUAT /apps/wmapfi
+# psql -U WMAP_FI -h 10.26.35.99 -p 8700 WMAP_FI
 
 Upload & download from Nexus:
 # curl -v -u nagamm --upload <filename> https://artifacts.devops.bfsaws.net/artifactory/RAW-HOSTED-TEST-DEV/gto-wmapfi/   ==> Upload
@@ -46,18 +67,13 @@ PERformance commands:
 # chkconfig --list |grep zcen   --> To check startup scripts
 # pcs status  --> Redhat PCS cluster status
 # hastatus -sum  --> Check VCS cluster status
-# ssh-keygen -t rsa
 # tar -cvf test.tar -C target/ <file name or (.)>  --> To compress only files in spec folder instead of entire folder structure
 # tar –xvzf documents.tar.gz –C /home/user/destination --> To extract exact files inside path
-
-Network:
-# ping -c5 <ip/fqdn>
-# netstat -tulnp |grep LISTEN --> To check 
 
 Install postgres
 # yum list --> To view all packages available in our repository
 # yum repolist --> To check repository list
-# rpm -qa |grep -i postgresql  --> to check availability of package
+# rpm -qa |grep -i postgresql  --> to check if package is installed
 # yum install postgresql
 # psql --version
 
@@ -71,6 +87,9 @@ Install Maven
 Check Oracle Version:
 # su - oracle
 # sqlplus -V
+# psql -U WMAP_FI -h 10.26.35.99 -p 8700 WMAP_FI
+# ps -ef|grep pmon  --> check if oracle process is running
+
 
 Python install
 # rpm -ql python3-3.6.8-18.el7.x86_64 |more
@@ -82,16 +101,6 @@ Python install
 # pip3 install PyYAML
 #alias python="/usr/local/bin/python3.9"
 
+
 https://www.kernel.org/doc/Documentation/sysctl/vm.txt
-
-
-
-
 update-alternatives --install "/usr/bin/java" "java" "/apps/software/Java11/jdk-11.0.16.1/bin/java"
-
-
-informatica doesnt need VIP to get working as its connecting 
-
-nick/kendryl will help setup vip UAT env
-
-scp jdk-11.0.16.1_linux-x64_bin.tar.gz monuser@bgcclvfietlu1:/tmp
