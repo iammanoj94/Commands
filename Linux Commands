@@ -14,6 +14,9 @@ General commands:
 # du -a /media/jack | sort -n -r | head -n 10 --> sort by largest top 10
 # lsof|grep wmapfi --> All open files by user wmapfi
 # lsblk - list all block devices
+# echo "- - -" > /sys/class/scsi_host/host0/scan --> Scan new disks add to system
+# fdisk -l /dev/sda -> To list partition details
+# mkfs.ext4 /dev/sda -> create a FS
 # vgs - show all volume groups
 # reboot:exit  -> Reboot command
 # time <command> --> to check how much time the command takes to exec
